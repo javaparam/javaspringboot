@@ -1,5 +1,3 @@
-package com.trackingnumber.api.service;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -15,29 +13,28 @@ public class TrackingNumberService {
 	@Autowired
 	private TrackingNumberRepository repository;
 
-	private long counter = 0L;
-	private final Object lock = new Object(); // Object to synchronize on
+	// Object used for synchronization
+	private final Object lock = new Object();
 
-	public String generateTrackingNumber(String originCountryId, String destinationCountryId, UUID customerId) {
-		String trackingNumber;
+	public String generateTrackingNumber() {
+		// The synchronized block ensures that only one thread can execute this block at
+		// a time
 		synchronized (lock) {
-			counter++;
-			trackingNumber = generateUniqueTrackingNumber(originCountryId, destinationCountryId, customerId, counter);
+			String trackingNumber;
+			do {
+				// Generate a tracking number using UUID or another logic
+				trackingNumber = UUID.randomUUID().toString().replace("-", "").substring(0, 16).toUpperCase();
+			} while (repository.existsByTrackingNumber(trackingNumber));
+			// Return the unique tracking number
+			return trackingNumber;
 		}
-		// Return the unique tracking number
-		return trackingNumber;
-	}
-
-	private String generateUniqueTrackingNumber(String originCountryId, String destinationCountryId, UUID customerId,
-			long counter) {
-		// Here we concatenate parts of the tracking number
-		return originCountryId + destinationCountryId + customerId.toString().substring(0, 8).toUpperCase()
-				+ String.format("%06d", counter);
 	}
 
 	public TrackingNumber createTrackingNumber(String originCountryId, String destinationCountryId, double weight,
 			LocalDateTime createdAt, UUID customerId, String customerName, String customerSlug) {
-		String trackingNumber = generateTrackingNumber(originCountryId, destinationCountryId, customerId);
+
+		// Generate the unique tracking number within the synchronized block
+		String trackingNumber = generateTrackingNumber();
 
 		// Create and save the TrackingNumber entity
 		TrackingNumber tn = new TrackingNumber(trackingNumber, createdAt);
