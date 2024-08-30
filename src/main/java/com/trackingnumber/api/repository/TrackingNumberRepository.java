@@ -10,8 +10,8 @@ import org.springframework.data.repository.query.Param;
 import com.trackingnumber.api.entity.TrackingNumber;
 
 public interface TrackingNumberRepository extends JpaRepository<TrackingNumber, Long> {
-    
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("SELECT t FROM TrackingNumber t WHERE t.trackingNumber = :trackingNumber")
-    TrackingNumber findByTrackingNumberForUpdate(@Param("trackingNumber") String trackingNumber);
+
+	@Lock(LockModeType.PESSIMISTIC_WRITE)
+	@Query("SELECT t FROM TrackingNumber t WHERE t.trackingNumber = :trackingNumber")
+	TrackingNumber findByTrackingNumberForUpdate(@Param("trackingNumber") String trackingNumber);
 }

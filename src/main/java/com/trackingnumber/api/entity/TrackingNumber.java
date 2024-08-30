@@ -8,11 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Version;
 
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+
 @Setter
 @Getter
 @Data
@@ -22,10 +22,7 @@ public class TrackingNumber {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Version
-    private Long version;
-	
+
 	@Column(unique = true, nullable = false)
 	private String trackingNumber;
 
@@ -43,101 +40,73 @@ public class TrackingNumber {
 		return id;
 	}
 
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-
-	public Long getVersion() {
-		return version;
-	}
-
-
-	public void setVersion(Long version) {
-		this.version = version;
-	}
-
 
 	public String getTrackingNumber() {
 		return trackingNumber;
 	}
 
-
 	public void setTrackingNumber(String trackingNumber) {
 		this.trackingNumber = trackingNumber;
 	}
-
 
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
-
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
-
 
 	public UUID getCustomerId() {
 		return customerId;
 	}
 
-
 	public void setCustomerId(UUID customerId) {
 		this.customerId = customerId;
 	}
-
 
 	public String getCustomerName() {
 		return customerName;
 	}
 
-
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
 	}
-
 
 	public String getCustomerSlug() {
 		return customerSlug;
 	}
 
-
 	public void setCustomerSlug(String customerSlug) {
 		this.customerSlug = customerSlug;
 	}
-
 
 	public String getOriginCountryId() {
 		return originCountryId;
 	}
 
-
 	public void setOriginCountryId(String originCountryId) {
 		this.originCountryId = originCountryId;
 	}
-
 
 	public String getDestinationCountryId() {
 		return destinationCountryId;
 	}
 
-
 	public void setDestinationCountryId(String destinationCountryId) {
 		this.destinationCountryId = destinationCountryId;
 	}
-
 
 	public double getWeight() {
 		return weight;
 	}
 
-
 	public void setWeight(double weight) {
 		this.weight = weight;
 	}
-
 
 	public TrackingNumber(String trackingNumber, LocalDateTime createdAt) {
 		this.trackingNumber = trackingNumber;
